@@ -10,7 +10,7 @@ import VideoPlayer from './components/VideoPlayer.vue'
 export default {
   name: 'app',
   components: {
-      VideoPlayer
+      VideoPlayer,
   }
 }
 </script>
