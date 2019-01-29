@@ -2,13 +2,13 @@
   <div class="video-player">
     <h1>Video Subtitles Demo</h1>
     <div class="input-container">
-      Video Public ID:  <input type="text" class="video-public-id" :value="videoPublicId" />
+      Video Public ID:  <input type="text" class="video-public-id" v-model="videoPublicId" />
     </div>
     <div class="input-container">
-        Video Subtitles URL File:  <input type="text" class="video-subtitles-file" :value="subtitlesFile" />
+        Video Subtitles URL File:  <input type="text" class="video-subtitles-file" v-model="subtitlesFile" />
     </div>
     <div class="input-container">
-        Video Subtitles JSON:  <textarea  class="video-subtitles" :value="stringifySubtitles"></textarea>
+        Video Subtitles JSON:  <textarea  class="video-subtitles" v-model="stringifySubtitles"></textarea>
     </div>
     <div class="input-container">
         Video Source:  <span  class="video-subtitles">{{ videoSource }}</span>
@@ -16,9 +16,8 @@
     <div class="input-container">
       <button class="submit-button" @click="loadVideoWithSubtitles">load subtitles</button>
     </div>
-    <video class="video-control" controls>
-      <source :src="videoSource" type="video/mp4">
-      <source :src="videoSource" type="video/ogg">
+    <video ref="videoControl" class="video-control" controls>
+      <source v-if="videoSource" :src="videoSource" :type="type">
     </video>
 
   </div>
@@ -81,6 +80,7 @@
               },
               subtitlesFile: 'https://res.cloudinary.com/candidate-evaluation/raw/upload/v1548679237/thepresent_-_subtitles.json',
               videoSource: 'https://res.cloudinary.com/candidate-evaluation/video/upload/v1545227210/The_Present.mp4',
+              type: 'video/mp4',
           };
       },
       computed: {
@@ -107,6 +107,7 @@
           },
           updateVideoSource(url) {
               this.videoSource = url;
+              this.$refs.videoControl.src = url;
           },
       },
       watch: {
@@ -144,5 +145,7 @@
     color: #3203ff;
     text-align: left;
     padding: 10px 10px;
+    max-width: 100%;
+    word-break: break-all;
   }
 </style>
